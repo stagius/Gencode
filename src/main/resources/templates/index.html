@@ -18,9 +18,15 @@
             </div>
 
             <div class="form-group">
-                <label for="idType">ID Type:</label>
-                <input type="text" class="form-control" id="idType" th:field="*{idType}" placeholder="ID Type">
+                <label for="idType">ID Type of Entity:</label>
+                <input type="text" class="form-control" id="idType" th:field="*{idType}" placeholder="ID Type (ex: Long)">
                 <p class="alert alert-danger" th:if="${#fields.hasErrors('idType')}" th:errors="*{idType}">
+            </div>
+
+            <div class="form-group">
+                <label for="attributes">Domain Attributes:</label>
+                <input type="text" class="form-control" id="attributes" th:field="*{attributes}" placeholder="'name'='type' separated with a ',' (ex: firstName=String,age=Integer...)">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('attributes')}" th:errors="*{attributes}">
             </div>
 
             <div class="form-group">

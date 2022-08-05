@@ -15,13 +15,22 @@ public class ObjectDto {
     @NotEmpty(message = "Name can not be empty!")
     private String name;
 
-    private String serviceContent;
-
-    private String repositoryContent;
-
     @Size(min = 3)
     @NotNull
     @NotEmpty(message = "Id Type can not be empty!")
     private String idType;
 
+    private String attributes;
+
+    private String domainContent;
+
+    private String serviceContent;
+
+    private String repositoryContent;
+
+    private String controllerContent;
+
+    private String dtoContent;
+
+    private String mapperContent;
 }
