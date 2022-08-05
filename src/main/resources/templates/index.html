@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gencode</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div align="center" class="col-md-12">
+    <h2>Enter an object name to generate files </h2>
+    <div class="col-md-6">
+        <form action="#" th:action="@{/generate}" th:object="${objectdto}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+            </div>
+
+            <div class="form-group">
+                <label for="idType">ID Type:</label>
+                <input type="text" class="form-control" id="idType" th:field="*{idType}" placeholder="ID Type">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('idType')}" th:errors="*{idType}">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

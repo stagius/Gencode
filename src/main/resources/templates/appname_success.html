@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gencode</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div align="center" class="col-md-12">
+    <div class="col-md-6" align="center">
+        <br />
+        <div class="alert alert-success col-md-8" role="alert">
+            <span>Processed: </span><span th:text="${objectdto.name}"></span><br/>
+        </div>
+    </div>
+
+    <div class="col-md-12" align="center">
+        <br />
+        <label for="repository">Repository :</label>
+        <textarea rows="5" type="text" class="form-control" id="repository" th:field="*{objectdto.repositoryContent}"></textarea>
+    </div>
+
+    <div class="col-md-12" align="center">
+        <br />
+        <label for="service">Service :</label>
+        <textarea rows="30" type="text" class="form-control" id="service" th:field="*{objectdto.serviceContent}"></textarea>
+    </div>
+</div>
+</body>
+</html>
