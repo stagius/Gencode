@@ -21,7 +21,7 @@ public class Generator {
         Logger.getGlobal().info("Generating " + repoName + " Repository");
         // Content generation
         return "@Repository\n" +
-                "public interface " + repoName + "Repository extends JpaRepository<" + repoName + ", "+ idType +"> {}";
+                "public interface " + repoName + "Repository extends JpaRepository<" + repoName + ", " + idType + "> {}";
     }
 
     public String generateService(String serviceName, String idType) {
@@ -57,29 +57,52 @@ public class Generator {
                 + "\tpublic " + serviceName + " find" + serviceName + "ById(" + idType + " id) {\n"
                 + "\t\treturn this." + serviceName.toLowerCase() + "Repository.findById(id).orElse(null);\n"
                 + "\t}"
-            + "\n}";
+                + "\n}";
     }
 
-    public String generateDomain(String domainName, String idType, Map<String, String> attributesList) {
+    public String generateDomain(String domainName, String idType, Map<String, String> attributesList, List<String> relationsList) {
         Logger.getGlobal().info("Generating " + domainName + " Domain");
         // Content generation
         String fileContent =
-            "@Builder\n" +
-            "@Entity\n" +
-            "@Table(name = \"" + domainName.toLowerCase() + "s\", schema = \"public\")\n" +
-            "@Data\n" +
-            "@NoArgsConstructor\n" +
-            "@AllArgsConstructor\n" +
-            "public class " + domainName + " implements Serializable {\n"
-            + "\n\t@Id\n"
-            + "\t@GeneratedValue(strategy = GenerationType.IDENTITY)\n"
-            + "\tprivate " + idType + " id;";
+                "@Builder\n" +
+                        "@Entity\n" +
+                        "@Table(name = \"" + domainName.toLowerCase() + "s\", schema = \"public\")\n" +
+                        "@Data\n" +
+                        "@NoArgsConstructor\n" +
+                        "@AllArgsConstructor\n" +
+                        "public class " + domainName + " implements Serializable {\n"
+                        + "\n\t@Id\n"
+                        + "\t@GeneratedValue(strategy = GenerationType.IDENTITY)\n"
+                        + "\tprivate " + idType + " id;";
 
-        List<String> tempList = new ArrayList<>();
-        attributesList.forEach((fieldName, fieldType) -> tempList.add(appendFieldsForDomain(fieldName, fieldType)));
+        // ATTRIBUTES
+        List<String> tempAttributesList = new ArrayList<>();
+        attributesList.forEach((fieldName, fieldType) -> tempAttributesList.add(appendFieldsForDomain(fieldName, fieldType)));
+        String appendAttributes = String.join("", tempAttributesList);
 
-        String finalAppend = String.join("", tempList);
-        return fileContent + "\n" + finalAppend + "}";
+        // RELATIONS
+        List<String> tempRelationsList = new ArrayList<>();
+        relationsList.forEach(value -> {
+            if (value.startsWith("@OneToMany")) {
+                String obj = value.split(":")[1];
+                String attribute = value.split(":")[2];
+                String adding = "\t@OneToMany(mappedBy = \"" + attribute + "\")"
+                        + "\n\t@JsonIgnore"
+                        + "\n\tprivate List<" + obj + "> " + obj.toLowerCase() + "s = new ArrayList<>();\n"
+                        + "\n\t// TODO ADD THE FOLLOWING ATTRIBUTE TO ENTITY : " + obj;
+                tempRelationsList.add(adding);
+            } else if (value.startsWith("@ManyToOne")) {
+                String relationType = value.split(":")[0];
+                String obj = value.split(":")[1];
+                String attribute = value.split(":")[2];
+                String adding = "\n\t" + relationType
+                        + "\n\tprivate " + obj + " " + attribute + ";\n";
+                tempRelationsList.add(adding);
+            }
+        });
+        String appendRelations = String.join("", tempRelationsList);
+
+        return fileContent + "\n" + appendAttributes + "\n" + appendRelations + "}";
     }
 
     public String generateController(String controllerName, String idType) {
@@ -87,23 +110,23 @@ public class Generator {
         // Content generation
         String fileContent =
                 "@RestController\n" +
-                "public class " + controllerName + "Controller {\n" +
-                "\n" +
-                "\t@Autowired\n" +
-                "\tprivate " + controllerName + "Service " + controllerName.toLowerCase() + "Service;\n" +
-                "\n" +
-                "\t@GetMapping(\"/" + controllerName.toLowerCase() + "s\")\n" +
-                "\tpublic List<" + controllerName + "Dto> get" + controllerName + "s() {\n" +
-                "\t\tList<" + controllerName + "Dto> " + controllerName.toLowerCase() + " = this." + controllerName.toLowerCase() + "Service.findAll" + controllerName + "s().stream()\n" +
-                "\t\t\t.map(Mapper::map" + controllerName + "ToDto)\n" +
-                "\t\t\t.collect(Collectors.toList());\n" +
-                "\t\treturn " + controllerName.toLowerCase() + ";\n" +
-                "\t}\n" +
-                "\n" +
-                "\t@GetMapping(\"/" + controllerName.toLowerCase() + "/{id}\")\n" +
-                "\tpublic " + controllerName + "Dto get" + controllerName + "(@PathVariable " + idType + " id) {\n" +
-                "\t\treturn Mapper.map" + controllerName + "ToDto(this." + controllerName.toLowerCase() + "Service.find" + controllerName + "ById(id));\n" +
-                "\t}";
+                        "public class " + controllerName + "Controller {\n" +
+                        "\n" +
+                        "\t@Autowired\n" +
+                        "\tprivate " + controllerName + "Service " + controllerName.toLowerCase() + "Service;\n" +
+                        "\n" +
+                        "\t@GetMapping(\"/" + controllerName.toLowerCase() + "s\")\n" +
+                        "\tpublic List<" + controllerName + "Dto> get" + controllerName + "s() {\n" +
+                        "\t\tList<" + controllerName + "Dto> " + controllerName.toLowerCase() + " = this." + controllerName.toLowerCase() + "Service.findAll" + controllerName + "s().stream()\n" +
+                        "\t\t\t.map(Mapper::map" + controllerName + "ToDto)\n" +
+                        "\t\t\t.collect(Collectors.toList());\n" +
+                        "\t\treturn " + controllerName.toLowerCase() + ";\n" +
+                        "\t}\n" +
+                        "\n" +
+                        "\t@GetMapping(\"/" + controllerName.toLowerCase() + "/{id}\")\n" +
+                        "\tpublic " + controllerName + "Dto get" + controllerName + "(@PathVariable " + idType + " id) {\n" +
+                        "\t\treturn Mapper.map" + controllerName + "ToDto(this." + controllerName.toLowerCase() + "Service.find" + controllerName + "ById(id));\n" +
+                        "\t}";
 
         return fileContent + "\n}";
     }
@@ -113,11 +136,11 @@ public class Generator {
         // Content generation
         String fileContent =
                 "@Builder\n" +
-                "@Data\n" +
-                "@AllArgsConstructor\n" +
-                "@NoArgsConstructor\n" +
-                "public class " + dtoName + "Dto {\n" +
-                "\n\tprivate " + idType + " id;";
+                        "@Data\n" +
+                        "@AllArgsConstructor\n" +
+                        "@NoArgsConstructor\n" +
+                        "public class " + dtoName + "Dto {\n" +
+                        "\n\tprivate " + idType + " id;";
 
         List<String> tempList = new ArrayList<>();
         attributesList.forEach((fieldName, fieldType) -> tempList.add(appendFieldsForDto(fieldName, fieldType)));
@@ -131,13 +154,13 @@ public class Generator {
         // Content generation
         String fileContent =
                 "@Builder\n" +
-                "@NoArgsConstructor\n" +
-                "@Component\n" +
-                "public class Mapper {\n"
-                + "\n\t// Quick note : use only 1 Mapper class that has all of the generated mapper methods (and use them statically)\n"
-                + "\n\t/*\n\t* " + dtoName + " Entity to DTO mapper\n\t*/"
-                + "\n\tpublic static " + dtoName + "Dto map" + dtoName + "ToDto(" + dtoName + " " + dtoName.toLowerCase() + ") {\n"
-                + "\t\treturn " + dtoName + "Dto.builder()";
+                        "@NoArgsConstructor\n" +
+                        "@Component\n" +
+                        "public class Mapper {\n"
+                        + "\n\t// Quick note : use only 1 Mapper class that has all of the generated mapper methods (and use them statically)\n"
+                        + "\n\t/*\n\t* " + dtoName + " Entity to DTO mapper\n\t*/"
+                        + "\n\tpublic static " + dtoName + "Dto map" + dtoName + "ToDto(" + dtoName + " " + dtoName.toLowerCase() + ") {\n"
+                        + "\t\treturn " + dtoName + "Dto.builder()";
 
         List<String> tempList = new ArrayList<>();
         attributesList.forEach((fieldName, fieldType) -> tempList.add(appendFieldsForMapper(dtoName, fieldName, fieldType)));
@@ -145,8 +168,6 @@ public class Generator {
         String finalAppend = String.join("", tempList);
         return fileContent + "\n" + finalAppend + "\t\t\t.build();\n\t}\n}";
     }
-
-
 
     private String appendFieldsForDomain(String name, String type) {
         if (type.equalsIgnoreCase("boolean")) {

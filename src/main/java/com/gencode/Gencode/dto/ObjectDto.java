@@ -24,6 +24,8 @@ public class ObjectDto {
 
     private String attributes;
 
+    private String relations;
+
     private String domainContent;
 
     private String serviceContent;
@@ -37,7 +39,10 @@ public class ObjectDto {
     private String mapperContent;
 
     public String toString() {
-        return "name=" + name + ", idType=" + idType + ", attributes="+attributes
+        return "name=" + name
+                + ", idType=" + idType
+                + ", attributes=" + attributes
+                + ", relations=" + relations
                 + ", domainContent=" + domainContent.substring(0, 5) + "..., "
                 + ", serviceContent=" + serviceContent.substring(0, 5) + "..., "
                 + ", repositoryContent=" + repositoryContent.substring(0, 5) + "..., "

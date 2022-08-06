@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -41,7 +42,6 @@ public class IndexController {
         } else {
             objectDto.setName((!objectDto.getName().isEmpty()) ? utils.formatFistLetterCapital(objectDto.getName()) : "");
 
-
             // REPOSITORY GENERATION
             String repositoryContent = generator.generateReporitory(objectDto.getName(), objectDto.getIdType());
             objectDto.setRepositoryContent(repositoryContent);
@@ -52,7 +52,8 @@ public class IndexController {
 
             // DOMAIN GENERATION
             Map<String, String> attributesList = utils.formatAttributes(objectDto.getAttributes());
-            String domainContent = generator.generateDomain(objectDto.getName(), objectDto.getIdType(), attributesList);
+            List<String> relationsList = utils.formatRelations(objectDto.getRelations());
+            String domainContent = generator.generateDomain(objectDto.getName(), objectDto.getIdType(), attributesList, relationsList);
             objectDto.setDomainContent(domainContent);
 
             // CONTROLLER GENERATION
@@ -63,7 +64,7 @@ public class IndexController {
             String dtoContent = generator.generateDto(objectDto.getName(), objectDto.getIdType(), attributesList);
             objectDto.setDtoContent(dtoContent);
 
-            // DTO GENERATION
+            // MAPPER GENERATION
             String mapperContent = generator.generateMapper(objectDto.getName(), objectDto.getIdType(), attributesList);
             objectDto.setMapperContent(mapperContent);
 

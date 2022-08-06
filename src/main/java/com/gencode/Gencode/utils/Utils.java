@@ -3,10 +3,8 @@ package com.gencode.Gencode.utils;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.OneToMany;
+import java.util.*;
 
 @Service
 @Data
@@ -27,4 +25,36 @@ public class Utils {
         return result;
     }
 
+    public List<String> formatRelations(String relations) {
+        // input example : Activite->responsable;@OneToMany|Utilisateur->responsable;@ManyToOne(cascade = CascadeType.PERSIST)
+        List<String> result = new ArrayList<>();
+
+        // example :
+        //    0:  Activite->responsable;@OneToMany
+        //    1:  Utilisateur->responsable;@ManyToOne(cascade = CascadeType.PERSIST)
+        List<String> pipeSplit = Arrays.asList(relations.split("\\|"));
+
+        pipeSplit.forEach(pipeElem -> {
+
+            // example :
+            // 0:   Activite->responsable
+            // 1:   @OneToMany
+            //  and
+            // 0:   Utilisateur->responsable
+            // 1:   @ManyToOne(cascade = CascadeType.PERSIST)
+            List<String> separatorSplit = Arrays.asList(pipeElem.split(";"));
+
+            String obj = separatorSplit.get(0).split("->")[0];
+            String attribute = separatorSplit.get(0).split("->")[1];
+
+
+            result.add(separatorSplit.get(1) + ":" + obj + ":" + attribute);
+        });
+
+        // RESULT :
+        // 0:   @OneToMany:Activite:responsable
+        // 1:   @ManyToOne(cascade = CascadeType.PERSIST):Utilisateur:responsable
+
+        return result;
+    }
 }

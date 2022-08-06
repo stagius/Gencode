@@ -30,6 +30,12 @@
             </div>
 
             <div class="form-group">
+                <label for="attributes">Relation Attributes:<br/><i>example: Activite->responsable;@OneToMany|Utilisateur->responsable;@ManyToOne(cascade = CascadeType.PERSIST)</i></label>
+                <input type="text" class="form-control" id="relations" th:field="*{relations}" placeholder="'Object'->'attribute';'@OneToMany'|'Object'->'attribute';'@ManyToOne'      NB: left of '|' = OneToMany, right of '|' = ManyToOne">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('relations')}" th:errors="*{relations}">
+            </div>
+
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
