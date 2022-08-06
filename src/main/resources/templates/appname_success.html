@@ -15,29 +15,26 @@
         </div>
     </div>
 
-    <div class="col-md-12" align="center">
-        <br />
-        <button class="btn btn-primary col-md-12" onclick="copyContent('repository')">Copy Repository</button>
-        <textarea rows="3" type="text" class="form-control" id="repository" th:field="*{objectdto.repositoryContent}"></textarea>
-    </div>
-
     <div class="container col-md-12"align="center">
         <div class="row">
             <div class="col-md-4">
                 <br />
                 <button class="btn btn-primary col-md-12" onclick="copyContent('service')">Copy Service</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/services</button>
                 <textarea rows="30" type="text" class="form-control" id="service" th:field="*{objectdto.serviceContent}"></textarea>
             </div>
 
             <div class="col-md-4">
                 <br />
                 <button class="btn btn-primary col-md-12" onclick="copyContent('domain')">Copy Domain</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/domains</button>
                 <textarea rows="30" type="text" class="form-control" id="domain" th:field="*{objectdto.domainContent}"></textarea>
             </div>
 
             <div class="col-md-4">
                 <br />
                 <button class="btn btn-primary col-md-12" onclick="copyContent('controller')">Copy Controller</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/controllers</button>
                 <textarea rows="30" type="text" class="form-control" id="controller" th:field="*{objectdto.controllerContent}"></textarea>
             </div>
         </div>
@@ -45,16 +42,25 @@
 
     <div class="container col-md-12"align="center">
         <div class="row">
-            <div class="col-md-6" align="center">
+            <div class="col-md-4" align="center">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('repository')">Copy Repository</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/repositories</button>
+                <textarea rows="3" type="text" class="form-control" id="repository" th:field="*{objectdto.repositoryContent}"></textarea>
+            </div>
+
+            <div class="col-md-4" align="center">
                 <br />
                 <button class="btn btn-primary col-md-12" onclick="copyContent('dto')">Copy DTO</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/dtos</button>
                 <textarea rows="20" type="text" class="form-control" id="dto" th:field="*{objectdto.dtoContent}"></textarea>
 
             </div>
 
-            <div class="col-md-6" align="center">
+            <div class="col-md-4" align="center">
                 <br />
                 <button class="btn btn-primary col-md-12" onclick="copyContent('mapper')">Copy Mapper</button>
+                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/utils</button>
                 <textarea rows="20" type="text" class="form-control" id="mapper" th:field="*{objectdto.mapperContent}"></textarea>
             </div>
         </div>
