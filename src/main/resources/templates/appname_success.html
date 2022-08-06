@@ -17,42 +17,68 @@
 
     <div class="col-md-12" align="center">
         <br />
-        <label for="repository">Repository :</label>
+        <button class="btn btn-primary col-md-12" onclick="copyContent('repository')">Copy Repository</button>
         <textarea rows="3" type="text" class="form-control" id="repository" th:field="*{objectdto.repositoryContent}"></textarea>
     </div>
 
-    <div class="col-md-12" align="center">
-        <br />
-        <label for="service">Service :</label>
-        <textarea rows="30" type="text" class="form-control" id="service" th:field="*{objectdto.serviceContent}"></textarea>
+    <div class="container col-md-12"align="center">
+        <div class="row">
+            <div class="col-md-4">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('service')">Copy Service</button>
+                <textarea rows="30" type="text" class="form-control" id="service" th:field="*{objectdto.serviceContent}"></textarea>
+            </div>
+
+            <div class="col-md-4">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('domain')">Copy Domain</button>
+                <textarea rows="30" type="text" class="form-control" id="domain" th:field="*{objectdto.domainContent}"></textarea>
+            </div>
+
+            <div class="col-md-4">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('controller')">Copy Controller</button>
+                <textarea rows="30" type="text" class="form-control" id="controller" th:field="*{objectdto.controllerContent}"></textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-12" align="center">
-        <br />
-        <label for="domain">Domain :</label>
-        <textarea rows="20" type="text" class="form-control" id="domain" th:field="*{objectdto.domainContent}"></textarea>
+    <div class="container col-md-12"align="center">
+        <div class="row">
+            <div class="col-md-6" align="center">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('dto')">Copy DTO</button>
+                <textarea rows="20" type="text" class="form-control" id="dto" th:field="*{objectdto.dtoContent}"></textarea>
+
+            </div>
+
+            <div class="col-md-6" align="center">
+                <br />
+                <button class="btn btn-primary col-md-12" onclick="copyContent('mapper')">Copy Mapper</button>
+                <textarea rows="20" type="text" class="form-control" id="mapper" th:field="*{objectdto.mapperContent}"></textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-12" align="center">
-        <br />
-        <label for="controller">Controller :</label>
-        <textarea rows="20" type="text" class="form-control" id="controller" th:field="*{objectdto.controllerContent}"></textarea>
-    </div>
-
-    <div class="col-md-12" align="center">
-        <br />
-        <label for="dto">DTO :</label>
-        <textarea rows="20" type="text" class="form-control" id="dto" th:field="*{objectdto.dtoContent}"></textarea>
-    </div>
-
-    <div class="col-md-12" align="center">
-        <br />
-        <label for="mapper">Mapper :</label>
-        <textarea rows="20" type="text" class="form-control" id="mapper" th:field="*{objectdto.mapperContent}"></textarea>
-    </div>
 
     <br>
     <br>
 </div>
 </body>
+<script>
+    function copyContent(id) {
+      /* Get the text field */
+      var copyText = document.getElementById(id);
+
+      /* Select the text field */
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+       /* Copy the text inside the text field */
+      navigator.clipboard.writeText(copyText.value);
+
+      /* Alert the copied text */
+      console.log("Copied the text: " + copyText.value);
+    }
+</script>
 </html>

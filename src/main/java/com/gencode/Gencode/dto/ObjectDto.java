@@ -2,6 +2,8 @@ package com.gencode.Gencode.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,4 +35,14 @@ public class ObjectDto {
     private String dtoContent;
 
     private String mapperContent;
+
+    public String toString() {
+        return "name=" + name + ", idType=" + idType + ", attributes="+attributes
+                + ", domainContent=" + domainContent.substring(0, 5) + "..., "
+                + ", serviceContent=" + serviceContent.substring(0, 5) + "..., "
+                + ", repositoryContent=" + repositoryContent.substring(0, 5) + "..., "
+                + ", controllerContent=" + controllerContent.substring(0, 5) + "..., "
+                + ", dtoContent=" + dtoContent.substring(0, 5) + "..., "
+                + ", mapperContent=" + mapperContent.substring(0, 5) + "...";
+    }
 }
