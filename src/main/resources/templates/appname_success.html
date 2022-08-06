@@ -19,22 +19,31 @@
         <div class="row">
             <div class="col-md-4">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('service')">Copy Service</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/services</button>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('service', 'paste_services')">Copy Service</button>
+                <div id="paste_services" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/services/<span th:text="${objectdto.name} + 'Service.java'"></span></b></span>
+                </div>
+
                 <textarea rows="30" type="text" class="form-control" id="service" th:field="*{objectdto.serviceContent}"></textarea>
             </div>
 
             <div class="col-md-4">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('domain')">Copy Domain</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/domains</button>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('domain', 'paste_domains')">Copy Domain/Entity</button>
+                <div id="paste_domains" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/domains/<span th:text="${objectdto.name} + '.java'"></span></b></span>
+                </div>
+
                 <textarea rows="30" type="text" class="form-control" id="domain" th:field="*{objectdto.domainContent}"></textarea>
             </div>
 
             <div class="col-md-4">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('controller')">Copy Controller</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/controllers</button>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('controller', 'paste_controllers')">Copy Controller</button>
+                <div id="paste_controllers" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/controllers/<span th:text="${objectdto.name} + 'Controller.java'"></span></b></span>
+                </div>
+
                 <textarea rows="30" type="text" class="form-control" id="controller" th:field="*{objectdto.controllerContent}"></textarea>
             </div>
         </div>
@@ -44,23 +53,31 @@
         <div class="row">
             <div class="col-md-4" align="center">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('repository')">Copy Repository</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/repositories</button>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('repository', 'paste_repositories')">Copy Repository</button>
+                <div id="paste_repositories" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/repositories/<span th:text="${objectdto.name} + 'Repository.java'"></span></b></span>
+                </div>
+
                 <textarea rows="3" type="text" class="form-control" id="repository" th:field="*{objectdto.repositoryContent}"></textarea>
             </div>
 
             <div class="col-md-4" align="center">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('dto')">Copy DTO</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/dtos</button>
-                <textarea rows="20" type="text" class="form-control" id="dto" th:field="*{objectdto.dtoContent}"></textarea>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('dto', 'paste_dtos')">Copy DTO</button>
+                <div id="paste_dtos" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/dtos/<span th:text="${objectdto.name} + 'Dto.java'"></span></b></span>
+                </div>
 
+                <textarea rows="20" type="text" class="form-control" id="dto" th:field="*{objectdto.dtoContent}"></textarea>
             </div>
 
             <div class="col-md-4" align="center">
                 <br />
-                <button class="btn btn-primary col-md-12" onclick="copyContent('mapper')">Copy Mapper</button>
-                <button disabled class="btn btn-secondary col-md-12" style="cursor: default;">Paste in : src/main/java/utils</button>
+                <button class="btn btn-primary col-md-12" onclick="copyContent('mapper', 'paste_utils')">Copy Mapper</button>
+                <div id="paste_utils" class="alert col-md-12" style="background-color: lightgray; visibility: collapse; padding: 0px; margin-bottom: -25px">
+                    <span style="cursor: default;">Copied! Now paste in : <b>src/main/java/utils/Mapper.java</b></span>
+                </div>
+
                 <textarea rows="20" type="text" class="form-control" id="mapper" th:field="*{objectdto.mapperContent}"></textarea>
             </div>
         </div>
@@ -72,9 +89,13 @@
 </div>
 </body>
 <script>
-    function copyContent(id) {
+    function copyContent(id, pasteId) {
       /* Get the text field */
       var copyText = document.getElementById(id);
+      var pasteText = document.getElementById(pasteId);
+      pasteText.style.backgroundColor = '';
+      pasteText.className += ' alert-info';
+      pasteText.style = 'visibility: visible; padding: 6px';
 
       /* Select the text field */
       copyText.select();
