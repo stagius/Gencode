@@ -1,8 +1,7 @@
-package com.gencode.Gencode.dto;
+package com.gencode.Gencode.dtos;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

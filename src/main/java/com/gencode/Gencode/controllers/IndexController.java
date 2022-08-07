@@ -1,6 +1,6 @@
 package com.gencode.Gencode.controllers;
 
-import com.gencode.Gencode.dto.ObjectDto;
+import com.gencode.Gencode.dtos.ObjectDto;
 import com.gencode.Gencode.service.Generator;
 import com.gencode.Gencode.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
