@@ -43,7 +43,7 @@ public class IndexController {
             objectDto.setName((!objectDto.getName().isEmpty()) ? utils.formatFistLetterCapital(objectDto.getName()) : "");
 
             // REPOSITORY GENERATION
-            String repositoryContent = generator.generateReporitory(objectDto.getName(), objectDto.getIdType());
+            String repositoryContent = generator.generateRepository(objectDto.getName(), objectDto.getIdType());
             objectDto.setRepositoryContent(repositoryContent);
 
             // SERVICE GENERATION

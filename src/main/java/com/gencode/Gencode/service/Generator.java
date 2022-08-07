@@ -17,7 +17,7 @@ public class Generator {
     @Autowired
     private Utils utils;
 
-    public String generateReporitory(String repoName, String idType) {
+    public String generateRepository(String repoName, String idType) {
         Logger.getGlobal().info("Generating " + repoName + " Repository");
         // Content generation
         return "@Repository\n" +
