@@ -57,4 +57,12 @@ public class Utils {
 
         return result;
     }
+
+    public String checkPlural(String serviceName) {
+        if (serviceName.endsWith("y")) {
+            return serviceName.substring(0, serviceName.length()-1) + (serviceName.substring(serviceName.length() - 1).replaceAll("y", "ies"));
+        } else {
+            return serviceName + "s";
+        }
+    }
 }
