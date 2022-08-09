@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class IndexController {
     private Generator generator;
 
     @RequestMapping("/")
-    public void index(HttpServletResponse response) throws IOException {
+    public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Received a request from : " + request.getServerName() + ", redirecting to /index...");
         response.sendRedirect("/index");
     }
 
