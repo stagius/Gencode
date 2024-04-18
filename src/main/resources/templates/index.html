@@ -5,33 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Gencode</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .form-group {
+            margin-top: 3rem;
+        }
+        p {
+            display: contents;
+        }
+        h3, .label__example {
+            text-align: left;
+        }
+        .info__zone {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .info__zone.clickable:hover {
+            cursor: pointer;
+            transform: scale(1.01);
+        }
+    </style>
 </head>
 <body>
 <div align="center" class="col-md-12">
     <h2>Enter an object name to generate files </h2>
-    <div class="col-md-6">
+    <div class="col-md-9">
         <form action="#" th:action="@{/generate}" th:object="${objectdto}" method="post">
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name">
+                <h3>Name</h3>
+                <div class="label__example">example:</div>
+                <div class="info__zone clickable" onclick="copyContent('name', 'User')">
+                    <p><i>User</i></p>
+                </div>
+                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Entity name">
                 <p class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
             </div>
 
             <div class="form-group">
-                <label for="idType">ID Type of Entity:</label>
-                <input type="text" class="form-control" id="idType" th:field="*{idType}" placeholder="ID Type (ex: Long)">
+                <h3>ID Type of Entity</h3>
+                <div class="label__example">example:</div>
+                <div class="info__zone clickable" onclick="copyContent('idType', 'Long')">
+                    <p><i>Long</i></p>
+                </div>
+                <input type="text" class="form-control" id="idType" th:field="*{idType}" placeholder="Entity ID type">
                 <p class="alert alert-danger" th:if="${#fields.hasErrors('idType')}" th:errors="*{idType}">
             </div>
 
             <div class="form-group">
-                <label for="attributes">Domain Attributes:</label>
-                <input type="text" class="form-control" id="attributes" th:field="*{attributes}" placeholder="'name'='type' separated with a ',' (ex: firstName=String,age=Integer...)">
+                <h3>Attributes</h3>
+                <div class="label__example">example:</div>
+                <div class="info__zone clickable" onclick="copyContent('attributes', 'firstName=String,age=Integer')">
+                    <p><i>firstName=String,age=Integer</i></p>
+                </div>
+                <input type="text" class="form-control" id="attributes" th:field="*{attributes}" placeholder="'name'='type' separated with a ','">
                 <p class="alert alert-danger" th:if="${#fields.hasErrors('attributes')}" th:errors="*{attributes}">
             </div>
 
             <div class="form-group">
-                <label for="attributes">Relation Attributes:<br/><i>example: Activite->responsable;@OneToMany|Utilisateur->responsable;@ManyToOne(cascade = CascadeType.PERSIST)</i></label>
-                <input type="text" class="form-control" id="relations" th:field="*{relations}" placeholder="'Object'->'attribute';'@OneToMany'|'Object'->'attribute';'@ManyToOne'      NB: left of '|' = OneToMany, right of '|' = ManyToOne">
+                <h3>Relation Attributes</h3>
+                <div class="label__example">example:</div>
+                <div class="info__zone clickable" onclick="copyContent('relations', 'Activity->owner;@OneToMany|User->owner;@ManyToOne(cascade = CascadeType.PERSIST)')">
+                    <p><i>Activity->owner;@OneToMany|User->owner;@ManyToOne(cascade = CascadeType.PERSIST)</i></p>
+                    <p><i>NB: left of '|' = OneToMany, right of '|' = ManyToOne</i></p>
+                </div>
+                <input type="text" class="form-control" id="relations" th:field="*{relations}" placeholder="'Object'->'attribute';'@OneToMany'|'Object'->'attribute';'@ManyToOne'">
                 <p class="alert alert-danger" th:if="${#fields.hasErrors('relations')}" th:errors="*{relations}">
             </div>
 
@@ -42,4 +82,10 @@
     </div>
 </div>
 </body>
+<script>
+    function copyContent(id, text) {
+      var pasteText = document.getElementById(id);
+      pasteText.value = text;
+    }
+</script>
 </html>
